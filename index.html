@@ -2,74 +2,95 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KariyerMod - Football RPG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KariyerMod</title>
     <style>
         :root {
             --primary: #10b981;
-            --primary-dark: #059669;
             --accent-coin: #f59e0b;
             --accent-gem: #38bdf8;
             --mega: #a855f7;
             --bg-dark: #070a12;
             --bg-card: #0f172a;
+            --bg-input: #0b1120;
             --text-main: #f8fafc;
-            --text-muted: #64748b;
+            --text-muted: #94a3b8;
             --border: #1e293b;
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .app-container { width: 100%; max-width: 420px; background: var(--bg-card); height: 100vh; max-height: 850px; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8); overflow: hidden; }
-        @media(min-width: 421px) { .app-container { height: 820px; border-radius: 24px; border: 1px solid var(--border); } }
+        body { background: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .app-container { width: 100%; max-width: 420px; background: var(--bg-card); height: 100vh; max-height: 900px; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.7); overflow: hidden; }
+        @media(min-width: 421px) { .app-container { height: 860px; border-radius: 24px; border: 1px solid var(--border); } }
 
-        .header { padding: 18px; background: #0b1120; border-bottom: 1px solid var(--border); text-align: center; }
-        .header h1 { font-size: 22px; font-weight: 900; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
+        .header { padding: 16px; background: #0b1120; border-bottom: 1px solid var(--border); text-align: center; }
+        .header h1 { font-size: 20px; font-weight: 900; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
 
-        .content-area { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; }
+        .content-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
         .screen { display: none; flex-direction: column; gap: 12px; }
         .screen.active { display: flex; }
 
-        .card { background: #070a12; border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
-        
-        /* Sekme Tuşları */
-        .auth-nav { display: flex; background: #1e293b; padding: 4px; border-radius: 12px; margin-bottom: 14px; }
-        .auth-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .card { background: var(--bg-dark); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+
+        .auth-nav { display: flex; background: #1e293b; padding: 4px; border-radius: 12px; margin-bottom: 16px; }
+        .auth-btn { flex: 1; padding: 12px; background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 14px; }
         .auth-btn.active { background: var(--primary); color: white; }
 
-        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-        .form-group label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; background: #0b1120; border: 1px solid var(--border); border-radius: 10px; color: white; font-size: 14px; outline: none; }
-        input:focus { border-color: var(--primary); }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        .form-group label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+        input, select { width: 100%; padding: 13px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 12px; color: white; font-size: 15px; outline: none; }
+        input:focus, select:focus { border-color: var(--primary); }
 
-        .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.1s; }
-        .btn:active { transform: scale(0.98); }
-        .btn-sec { background: #1e293b; color: white; border: 1px solid var(--border); }
+        .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; }
+        .btn:active { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-sec { background: #1e293b; border: 1px solid var(--border); }
         .btn-danger { background: var(--danger); }
+        .btn-rest { background: #3b82f6; }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .stat-box { background: #0b1120; border: 1px solid var(--border); padding: 10px; border-radius: 10px; text-align: center; }
-        .stat-box p { font-size: 10px; color: var(--text-muted); font-weight: 700; }
-        .stat-box h3 { font-size: 15px; color: var(--primary); margin-top: 2px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat-box { background: var(--bg-input); border: 1px solid var(--border); padding: 12px; border-radius: 12px; text-align: center; }
+        .stat-box p { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+        .stat-box h3 { font-size: 18px; font-weight: 800; }
 
-        .navbar { display: none; background: #0b1120; border-top: 1px solid var(--border); padding: 8px; justify-content: space-around; }
-        .nav-btn { background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; font-weight: 700; padding: 6px 12px; border-radius: 8px; }
-        .nav-btn.active { color: var(--primary); background: rgba(16, 185, 129, 0.1); }
+        .progress-wrap { margin-top: 8px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+        .progress-bar { height: 8px; background: #1e293b; border-radius: 99px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 99px; transition: width 0.3s; }
+        .fill-energy { background: #3b82f6; }
+        .fill-morale { background: #f59e0b; }
+        .fill-xp { background: var(--primary); }
 
-        .badge { background: var(--accent-coin); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; }
-        .badge-gem { background: var(--accent-gem); }
-        .badge-mega { background: var(--mega); color: white; }
+        .navbar { display: none; background: #0b1120; border-top: 1px solid var(--border); padding: 10px 6px; justify-content: space-around; }
+        .nav-btn { background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; font-weight: 600; padding: 8px 10px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+        .nav-btn.active { color: var(--primary); background: rgba(16, 185, 129, 0.12); }
+        .nav-btn span { font-size: 18px; }
+
+        .badge { display: inline-block; background: var(--accent-coin); color: #000; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+        .badge-lvl { background: var(--primary); color: white; }
+
+        .feature-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 10px 12px; border-radius: 10px; gap: 10px; }
+        .feature-item .name { font-size: 13px; flex: 1; }
+        .feature-item .buy-btn { padding: 7px 12px; font-size: 12px; border-radius: 8px; white-space: nowrap; }
+
+        #toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(30px);
+            background: #1e293b; color: white; padding: 14px 22px; border-radius: 12px;
+            font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none;
+            transition: all 0.3s; z-index: 9999; max-width: 90%; text-align: center;
+            border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        #toast.success { border-color: #22c55e; }
+        #toast.error { border-color: var(--danger); }
     </style>
 </head>
 <body>
-
 <div class="app-container">
-    <div class="header">
-        <h1>KariyerMod</h1>
-    </div>
+    <div class="header"><h1>KariyerMod</h1></div>
 
     <div class="content-area">
-        <!-- GİRİŞ & KAYIT -->
+        <!-- AUTH -->
         <div id="screen-auth" class="screen active">
             <div class="card">
                 <div class="auth-nav">
@@ -80,7 +101,7 @@
                 <div id="form-login">
                     <div class="form-group">
                         <label>Kullanıcı Adı</label>
-                        <input type="text" id="loginUser" placeholder="Adınızı yazın">
+                        <input type="text" id="loginUser" placeholder="Kullanıcı adınız">
                     </div>
                     <div class="form-group">
                         <label>Şifre</label>
@@ -89,7 +110,7 @@
                     <button class="btn" onclick="doLogin()">Giriş Yap ➔</button>
                 </div>
 
-                <div id="form-register" style="display: none;">
+                <div id="form-register" style="display:none;">
                     <div class="form-group">
                         <label>Yeni Kullanıcı Adı</label>
                         <input type="text" id="regUser" placeholder="Kullanıcı adı belirleyin">
@@ -101,12 +122,15 @@
                     <button class="btn" onclick="doRegister()">Kayıt Ol ve Başla ✨</button>
                 </div>
             </div>
+            <p style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:8px;">
+                İlk defa oynuyorsan "Kayıt Ol" sekmesinden hesap oluştur.
+            </p>
         </div>
 
-        <!-- KARİYER OLUŞTURMA -->
+        <!-- CREATE -->
         <div id="screen-create" class="screen">
             <div class="card">
-                <h2 style="font-size:16px; text-align:center; margin-bottom:12px;">⚽ Oyuncunu Oluştur</h2>
+                <h2 style="font-size:17px; text-align:center; margin-bottom:16px;">⚽ Oyuncunu Oluştur</h2>
                 <div class="form-group">
                     <label>Oyuncu Adı</label>
                     <input type="text" id="pName" placeholder="Örn: Arda Güler">
@@ -132,225 +156,261 @@
             </div>
         </div>
 
-        <!-- ANA MERKEZ -->
+        <!-- HUB -->
         <div id="screen-hub" class="screen">
             <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <h3 id="hName" style="font-size:16px;">-</h3>
-                    <p id="hTeam" style="font-size:11px; color:var(--text-muted);">-</p>
+                    <h3 id="hName" style="font-size:17px; font-weight:800;">-</h3>
+                    <p id="hTeam" style="font-size:12px; color:var(--text-muted); margin-top:2px;">-</p>
                 </div>
                 <div style="text-align:right;">
-                    <span class="badge" style="background:var(--primary); color:white;" id="hLvl">Lvl 1</span>
-                    <h2 id="hOvr" style="color:var(--primary); font-size:18px;">68</h2>
+                    <span class="badge badge-lvl" id="hLvl">Lvl 1</span>
+                    <div id="hOvr" style="color:var(--primary); font-size:22px; font-weight:900; margin-top:4px;">68</div>
                 </div>
             </div>
 
             <div class="grid-2">
-                <div class="stat-box" style="border-color:var(--accent-coin);"><p>🪙 Coin</p><h3 id="hCoins" style="color:var(--accent-coin);">0</h3></div>
-                <div class="stat-box" style="border-color:var(--accent-gem);"><p>💎 Elmas</p><h3 id="hGems" style="color:var(--accent-gem);">0</h3></div>
+                <div class="stat-box" style="border-color:rgba(245,158,11,0.4)">
+                    <p>🪙 Coin</p>
+                    <h3 id="hCoins" style="color:var(--accent-coin)">0</h3>
+                </div>
+                <div class="stat-box" style="border-color:rgba(56,189,248,0.4)">
+                    <p>💎 Elmas</p>
+                    <h3 id="hGems" style="color:var(--accent-gem)">0</h3>
+                </div>
             </div>
 
-            <div class="grid-2">
-                <div class="stat-box"><p>Enerji</p><h3 id="hEnergy">100</h3></div>
-                <div class="stat-box"><p>Moral</p><h3 id="hMorale">95</h3></div>
+            <div class="card">
+                <div class="progress-wrap">
+                    <div class="progress-label"><span>⚡ Enerji</span><span id="hEnergyText">100/100</span></div>
+                    <div class="progress-bar"><div class="progress-fill fill-energy" id="energyBar" style="width:100%"></div></div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-label"><span>😊 Moral</span><span id="hMoraleText">95/100</span></div>
+                    <div class="progress-bar"><div class="progress-fill fill-morale" id="moraleBar" style="width:95%"></div></div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-label"><span>⭐ XP</span><span id="hXpText">0/100</span></div>
+                    <div class="progress-bar"><div class="progress-fill fill-xp" id="xpBar" style="width:0%"></div></div>
+                </div>
             </div>
 
-            <button class="btn" onclick="playMatch()">⚽ MAÇA ÇIK (+Coin & XP)</button>
-            <button class="btn btn-sec" onclick="train()">💪 Antrenman Yap (+XP)</button>
+            <button class="btn" id="btnMatch" onclick="playMatch()">⚽ Maça Çık (+Coin & XP)</button>
+            <button class="btn btn-sec" id="btnTrain" onclick="train()">💪 Antrenman Yap (+XP)</button>
+            <button class="btn btn-rest" id="btnRest" onclick="rest()">😴 Dinlen (+Enerji)</button>
         </div>
 
-        <!-- TRANSFER PAZARI -->
+        <!-- MARKET -->
         <div id="screen-market" class="screen">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="font-size:14px;">🛍️ Transfer Pazarı</h3>
-                <button class="btn btn-sec" style="width:auto; padding:6px 12px; font-size:11px;" onclick="loadMarket()">🔄 Yenile</button>
+                <h3 style="font-size:15px; font-weight:700;">🛍️ Transfer Pazarı</h3>
+                <button class="btn btn-sec" style="width:auto; padding:7px 14px; font-size:12px;" onclick="loadMarket()">🔄 Yenile</button>
             </div>
-            <div id="marketList" style="display:flex; flex-direction:column; gap:8px;"></div>
+            <div id="marketList" style="display:flex; flex-direction:column; gap:10px;"></div>
         </div>
 
-        <!-- ÖZELLİKLER -->
+        <!-- FEATURES -->
         <div id="screen-features" class="screen">
-            <h3 style="font-size:14px;">⚡ 7.123 Özellik Kataloğu</h3>
-            <input type="text" id="fSearch" placeholder="Özellik veya Mega Özellik ara..." oninput="renderFeatures()">
-            <div class="card" id="fList" style="max-height:400px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+            <h3 style="font-size:15px; font-weight:700;">⚡ Özellik Kataloğu</h3>
+            <input type="text" id="fSearch" placeholder="Özellik ara..." oninput="renderFeatures()" style="margin-bottom:10px;">
+            <div id="fList" style="display:flex; flex-direction:column; gap:8px; max-height:480px; overflow-y:auto;"></div>
         </div>
 
-        <!-- PROFİL -->
+        <!-- PROFILE -->
         <div id="screen-profile" class="screen">
             <div class="card">
-                <h3 style="font-size:14px; margin-bottom:8px;">👤 İstatistikler</h3>
-                <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
-                    <div style="display:flex; justify-content:space-between;"><span>Hız:</span><strong id="stSpd">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Şut:</span><strong id="stSht">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Pas:</span><strong id="stPas">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Defans:</span><strong id="stDef">60</strong></div>
-                </div>
+                <h3 style="font-size:15px; margin-bottom:12px; font-weight:700;">👤 Oyuncu İstatistikleri</h3>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);"><span>Hız</span><strong id="stSpd" style="color:var(--primary)">68</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);"><span>Şut</span><strong id="stSht" style="color:var(--primary)">68</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);"><span>Pas</span><strong id="stPas" style="color:var(--primary)">68</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0;"><span>Defans</span><strong id="stDef" style="color:var(--primary)">60</strong></div>
             </div>
             <button class="btn btn-danger" onclick="logout()">Hesabı Sıfırla / Çıkış</button>
         </div>
     </div>
 
     <div class="navbar" id="mainNav">
-        <button class="nav-btn active" onclick="nav('screen-hub', this)">🏠 Merkez</button>
-        <button class="nav-btn" onclick="nav('screen-market', this)">🛍️ Transfer</button>
-        <button class="nav-btn" onclick="nav('screen-features', this)">⚡ Özellikler</button>
-        <button class="nav-btn" onclick="nav('screen-profile', this)">👤 Profil</button>
+        <button class="nav-btn active" onclick="nav('screen-hub', this)"><span>🏠</span>Merkez</button>
+        <button class="nav-btn" onclick="nav('screen-market', this)"><span>🛍️</span>Transfer</button>
+        <button class="nav-btn" onclick="nav('screen-features', this)"><span>⚡</span>Özellik</button>
+        <button class="nav-btn" onclick="nav('screen-profile', this)"><span>👤</span>Profil</button>
     </div>
 </div>
 
-<script>
-    let user = JSON.parse(localStorage.getItem('km_usr')) || null;
-    let game = JSON.parse(localStorage.getItem('km_gam')) || null;
+<div id="toast"></div>
 
-    // 7123 Özellik Oluşturma
-    const features = [];
+<script>
+    // Güvenli localStorage erişimi
+    function safeGet(key) {
+        try {
+            const val = localStorage.getItem(key);
+            return val ? JSON.parse(val) : null;
+        } catch (e) {
+            console.error('localStorage okuma hatası:', e);
+            return null;
+        }
+    }
+    function safeSet(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (e) {
+            console.error('localStorage yazma hatası:', e);
+            showToast('Kayıt yapılamadı! Tarayıcı depolamayı engelliyor olabilir.', 'error');
+            return false;
+        }
+    }
+
+    let user = safeGet('km_usr');
+    let game = safeGet('km_gam');
+
     const baseNames = ["Trivela", "Ölü Yaprak", "Lazer Pas", "Çelik Bilek", "Meteor Şut", "Kuantum Çalım", "Titanyum Pres"];
-    for(let i=1; i<=7123; i++) {
-        let isM = i > 6848;
-        let bName = baseNames[i % baseNames.length];
+    const features = [];
+    for (let i = 1; i <= 7123; i++) {
+        const isM = i > 6848;
         features.push({
             id: i,
-            name: isM ? `🔥 MEGA-${i-6848}: ${bName}` : `${bName} Lvl ${Math.ceil(i/7)}`,
+            name: isM ? `🔥 MEGA-${i-6848}: \( {baseNames[i % baseNames.length]}` : ` \){baseNames[i % baseNames.length]} Lvl ${Math.ceil(i/7)}`,
             costC: isM ? (i-6848)*500 : i*80,
             costG: isM ? Math.ceil((i-6848)/10) : Math.ceil(i/200),
-            isM: isM
+            isM
         });
     }
 
-    function showForm(m) {
-        document.getElementById('tab-login-btn').classList.toggle('active', m==='login');
-        document.getElementById('tab-reg-btn').classList.toggle('active', m==='register');
-        document.getElementById('form-login').style.display = m==='login'?'block':'none';
-        document.getElementById('form-register').style.display = m==='register'?'block':'none';
+    function showToast(msg, type = '') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'show ' + type;
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => t.className = '', 2800);
+    }
+
+    function showForm(mode) {
+        document.getElementById('tab-login-btn').classList.toggle('active', mode === 'login');
+        document.getElementById('tab-reg-btn').classList.toggle('active', mode === 'register');
+        document.getElementById('form-login').style.display = mode === 'login' ? 'block' : 'none';
+        document.getElementById('form-register').style.display = mode === 'register' ? 'block' : 'none';
     }
 
     function doRegister() {
         const u = document.getElementById('regUser').value.trim();
         const p = document.getElementById('regPass').value.trim();
-        if(!u || !p) return alert('Lütfen tüm alanları doldurun!');
-        localStorage.setItem('km_usr', JSON.stringify({u, p}));
-        alert('Kayıt başarılı! Giriş Yap sekmesinden giriş yapabilirsiniz.');
-        showForm('login');
+
+        if (!u || !p) {
+            showToast('Lütfen tüm alanları doldurun!', 'error');
+            return;
+        }
+        if (u.length < 3) {
+            showToast('Kullanıcı adı en az 3 karakter olmalı', 'error');
+            return;
+        }
+        if (p.length < 3) {
+            showToast('Şifre en az 3 karakter olmalı', 'error');
+            return;
+        }
+
+        const success = safeSet('km_usr', { u, p });
+        if (success) {
+            user = { u, p };
+            showToast('Kayıt başarılı! Şimdi giriş yapabilirsiniz.', 'success');
+            showForm('login');
+            document.getElementById('loginUser').value = u;
+            document.getElementById('loginPass').value = '';
+            document.getElementById('loginPass').focus();
+        }
     }
 
     function doLogin() {
         const u = document.getElementById('loginUser').value.trim();
         const p = document.getElementById('loginPass').value.trim();
-        user = JSON.parse(localStorage.getItem('km_usr'));
-        if(!user || user.u !== u || user.p !== p) {
-            return alert('Hatalı kullanıcı adı veya şifre! (Önce Kayıt Olun)');
+
+        if (!u || !p) {
+            showToast('Kullanıcı adı ve şifre girin!', 'error');
+            return;
         }
-        if(!game) setScreen('screen-create');
-        else { loadHub(); setScreen('screen-hub'); }
+
+        user = safeGet('km_usr');
+
+        if (!user) {
+            showToast('Henüz kayıt yok. Önce "Kayıt Ol" sekmesinden hesap oluşturun.', 'error');
+            return;
+        }
+
+        if (user.u !== u || user.p !== p) {
+            showToast('Hatalı kullanıcı adı veya şifre!', 'error');
+            return;
+        }
+
+        // Giriş başarılı
+        game = safeGet('km_gam');
+        if (!game) {
+            setScreen('screen-create');
+            showToast('Hoş geldin! Şimdi oyuncunu oluştur.', 'success');
+        } else {
+            loadHub();
+            setScreen('screen-hub');
+            showToast('Tekrar hoş geldin!', 'success');
+        }
     }
 
     function createCareer() {
         const name = document.getElementById('pName').value.trim();
         const pos = document.getElementById('pPos').value;
         const team = document.getElementById('pTeam').value;
-        if(!name) return alert('Lütfen futbolcu adı yazın!');
 
-        let c = 5000, g = 50;
-        if(team === 'Pendikspor') { c = 8500; g = 75; }
-        if(team === 'Feyenoord') { c = 15000; g = 120; }
+        if (!name) {
+            showToast('Lütfen futbolcu adı yazın!', 'error');
+            return;
+        }
 
-        game = { name, pos, team, lvl: 1, xp: 0, coins: c, gems: g, energy: 100, morale: 95, stats: { spd: 68, sht: 68, pas: 68, def: 60 } };
-        localStorage.setItem('km_gam', JSON.stringify(game));
-        loadHub();
-        setScreen('screen-hub');
+        let coins = 5000, gems = 50;
+        if (team === 'Pendikspor') { coins = 8500; gems = 75; }
+        if (team === 'Feyenoord') { coins = 15000; gems = 120; }
+
+        let stats = { spd: 65, sht: 65, pas: 65, def: 60 };
+        if (pos === 'ST')  stats = { spd: 72, sht: 76, pas: 62, def: 48 };
+        if (pos === 'CAM') stats = { spd: 70, sht: 68, pas: 78, def: 52 };
+        if (pos === 'CM')  stats = { spd: 68, sht: 64, pas: 74, def: 66 };
+        if (pos === 'CB')  stats = { spd: 62, sht: 48, pas: 60, def: 78 };
+
+        game = {
+            name, pos, team,
+            lvl: 1, xp: 0,
+            coins, gems,
+            energy: 100, morale: 95,
+            stats,
+            ownedFeatures: []
+        };
+
+        if (safeSet('km_gam', game)) {
+            loadHub();
+            setScreen('screen-hub');
+            showToast(`Hoş geldin ${name}! Kariyerin başladı.`, 'success');
+        }
+    }
+
+    function saveGame() {
+        safeSet('km_gam', game);
+    }
+
+    function calcOVR() {
+        const s = game.stats;
+        return Math.floor((s.spd + s.sht + s.pas + s.def) / 4);
+    }
+
+    function checkLevelUp() {
+        const needed = game.lvl * 100;
+        while (game.xp >= needed) {
+            game.xp -= needed;
+            game.lvl++;
+            game.gems += 15;
+            game.stats.spd += 1;
+            game.stats.sht += 1;
+            game.stats.pas += 1;
+            game.stats.def += 1;
+            showToast(`🎉 Level Atladın! Lvl ${game.lvl} (+15 Elmas)`, 'success');
+        }
     }
 
     function loadHub() {
-        if(!game) return;
-        document.getElementById('hName').innerText = game.name;
-        document.getElementById('hTeam').innerText = `${game.team} (${game.pos})`;
-        document.getElementById('hLvl').innerText = `Lvl ${game.lvl}`;
-        document.getElementById('hCoins').innerText = game.coins.toLocaleString();
-        document.getElementById('hGems').innerText = game.gems;
-        document.getElementById('hEnergy').innerText = game.energy;
-        document.getElementById('hMorale').innerText = game.morale;
-        document.getElementById('hOvr').innerText = Math.floor((game.stats.spd + game.stats.sht + game.stats.pas + game.stats.def)/4);
-    }
-
-    function setScreen(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.getElementById('mainNav').style.display = ['screen-auth', 'screen-create'].includes(id) ? 'none' : 'flex';
-    }
-
-    function nav(id, btn) {
-        setScreen(id);
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if(id === 'screen-features') renderFeatures();
-        if(id === 'screen-market') loadMarket();
-        if(id === 'screen-profile') updateProfile();
-    }
-
-    function train() {
-        if(game.energy < 15) return alert('Enerjiniz yetersiz!');
-        game.energy -= 15; game.xp += 40; game.coins += 250; game.stats.spd += 1;
-        if(game.xp >= game.lvl * 100) { game.lvl++; game.gems += 15; alert(`Level Atladın! Lvl ${game.lvl} (+15 Elmas)`); }
-        localStorage.setItem('km_gam', JSON.stringify(game));
-        loadHub();
-    }
-
-    function playMatch() {
-        if(game.energy < 20) return alert('Enerjin yetersiz!');
-        let win = Math.random() > 0.4;
-        let cGain = win ? 1500 : 500;
-        game.coins += cGain;
-        game.energy -= 20;
-        alert(win ? `🎉 Maçı Kazandın! +🪙 ${cGain} Coin` : `Maç Bitti. +🪙 ${cGain} Coin`);
-        localStorage.setItem('km_gam', JSON.stringify(game));
-        loadHub();
-    }
-
-    function loadMarket() {
-        const names = ["Gabriel Rossi", "Bruno Silva", "Enzo Gomez", "Luka Modric"];
-        const list = document.getElementById('marketList');
-        list.innerHTML = '';
-        names.forEach(n => {
-            let prc = Math.floor(Math.random()*2000) + 3000;
-            list.innerHTML += `
-                <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div><h4 style="font-size:12px;">${n}</h4><p style="font-size:10px; color:var(--text-muted);">Transfer Adayı</p></div>
-                    <button class="btn" style="width:auto; padding:6px 10px; font-size:11px;" onclick="buyP('${n}', ${prc})">🪙 ${prc}</button>
-                </div>`;
-        });
-    }
-
-    function buyP(n, p) {
-        if(game.coins < p) return alert('Yetersiz Coin!');
-        game.coins -= p; game.morale = Math.min(100, game.morale + 5);
-        alert(`${n} transfer edildi!`);
-        localStorage.setItem('km_gam', JSON.stringify(game));
-        loadHub();
-    }
-
-    function renderFeatures() {
-        const q = document.getElementById('fSearch').value.toLowerCase();
-        const list = document.getElementById('fList');
-        list.innerHTML = '';
-        features.filter(f => f.name.toLowerCase().includes(q)).slice(0, 30).forEach(f => {
-            list.innerHTML += `
-                <div style="display:flex; justify-content:space-between; align-items:center; background:#0b1120; padding:8px; border-radius:8px;">
-                    <span style="font-size:11px; color:${f.isM?'var(--mega)':'white'}">${f.name}</span>
-                    <span class="badge ${f.isM?'badge-mega':''}">🪙${f.costC} / 💎${f.costG}</span>
-                </div>`;
-        });
-    }
-
-    function updateProfile() {
-        if(!game) return;
-        document.getElementById('stSpd').innerText = game.stats.spd;
-        document.getElementById('stSht').innerText = game.stats.sht;
-        document.getElementById('stPas').innerText = game.stats.pas;
-        document.getElementById('stDef').innerText = game.stats.def;
-    }
-
-    function logout() { localStorage.clear(); location.reload(); }
-</script>
-</body>
-</html>
-
+        if (!game) 
