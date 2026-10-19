@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KariyerMod - Ultimate Football RPG</title>
+    <title>KariyerMod - Football RPG</title>
     <style>
         :root {
             --primary: #10b981;
-            --primary-glow: rgba(16, 185, 129, 0.3);
+            --primary-dark: #059669;
             --accent-coin: #f59e0b;
             --accent-gem: #38bdf8;
-            --mega-purple: #a855f7;
+            --mega: #a855f7;
             --bg-dark: #070a12;
             --bg-card: #0f172a;
             --text-main: #f8fafc;
@@ -18,46 +18,47 @@
             --border: #1e293b;
             --danger: #ef4444;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .app-container { width: 100%; max-width: 440px; background: var(--bg-card); height: 100vh; max-height: 900px; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.8); overflow: hidden; }
-        @media(min-width: 441px) { .app-container { height: 860px; border-radius: 28px; border: 1px solid var(--border); } }
+        .app-container { width: 100%; max-width: 420px; background: var(--bg-card); height: 100vh; max-height: 850px; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8); overflow: hidden; }
+        @media(min-width: 421px) { .app-container { height: 820px; border-radius: 24px; border: 1px solid var(--border); } }
 
-        .header { padding: 16px 20px; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); text-align: center; }
-        .header h1 { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
-        
-        .content-area { flex: 1; overflow-y: auto; padding: 16px; position: relative; }
-        .screen { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.2s ease-out; }
+        .header { padding: 18px; background: #0b1120; border-bottom: 1px solid var(--border); text-align: center; }
+        .header h1 { font-size: 22px; font-weight: 900; color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
+
+        .content-area { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; }
+        .screen { display: none; flex-direction: column; gap: 12px; }
         .screen.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-        .card { background: #0b1120; border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
-        .btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
-        .btn:active { transform: scale(0.97); }
-        .btn-secondary { background: #1e293b; color: var(--text-main); border: 1px solid var(--border); }
-        .btn-danger { background: var(--danger); }
+        .card { background: #070a12; border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
         
-        .auth-tabs { display: flex; background: #070a12; padding: 4px; border-radius: 10px; margin-bottom: 12px; }
-        .auth-tab-btn { flex: 1; padding: 8px; background: none; border: none; color: var(--text-muted); font-weight: 600; border-radius: 6px; cursor: pointer; }
-        .auth-tab-btn.active { background: var(--primary); color: white; }
+        /* Sekme Tuşları */
+        .auth-nav { display: flex; background: #1e293b; padding: 4px; border-radius: 12px; margin-bottom: 14px; }
+        .auth-btn { flex: 1; padding: 10px; background: none; border: none; color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .auth-btn.active { background: var(--primary); color: white; }
 
-        .input-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
-        .input-group label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-        input, select { width: 100%; padding: 10px; background: #070a12; border: 1px solid var(--border); border-radius: 8px; color: white; font-size: 13px; outline: none; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .form-group label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        input, select { width: 100%; padding: 12px; background: #0b1120; border: 1px solid var(--border); border-radius: 10px; color: white; font-size: 14px; outline: none; }
+        input:focus { border-color: var(--primary); }
 
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .stat-box { background: #070a12; border: 1px solid var(--border); padding: 8px; border-radius: 10px; text-align: center; }
-        .stat-box p { font-size: 9px; color: var(--text-muted); }
-        .stat-box h3 { font-size: 14px; color: var(--primary); margin-top: 2px; }
+        .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.1s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-sec { background: #1e293b; color: white; border: 1px solid var(--border); }
+        .btn-danger { background: var(--danger); }
 
-        .navbar { display: none; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 8px; justify-content: space-around; }
-        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .nav-item.active { color: var(--primary); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .stat-box { background: #0b1120; border: 1px solid var(--border); padding: 10px; border-radius: 10px; text-align: center; }
+        .stat-box p { font-size: 10px; color: var(--text-muted); font-weight: 700; }
+        .stat-box h3 { font-size: 15px; color: var(--primary); margin-top: 2px; }
+
+        .navbar { display: none; background: #0b1120; border-top: 1px solid var(--border); padding: 8px; justify-content: space-around; }
+        .nav-btn { background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; font-weight: 700; padding: 6px 12px; border-radius: 8px; }
+        .nav-btn.active { color: var(--primary); background: rgba(16, 185, 129, 0.1); }
 
         .badge { background: var(--accent-coin); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; }
-        .badge-gem { background: var(--accent-gem); color: #000; }
-        .badge-mega { background: var(--mega-purple); color: #fff; }
-        .badge-green { background: var(--primary); color: white; }
+        .badge-gem { background: var(--accent-gem); }
+        .badge-mega { background: var(--mega); color: white; }
     </style>
 </head>
 <body>
@@ -68,36 +69,36 @@
     </div>
 
     <div class="content-area">
-        <!-- GİRİŞ & KAYIT EKRANI -->
+        <!-- GİRİŞ & KAYIT -->
         <div id="screen-auth" class="screen active">
             <div class="card">
-                <div class="auth-tabs">
-                    <button class="auth-tab-btn active" onclick="toggleAuthMode('login')">Giriş Yap</button>
-                    <button class="auth-tab-btn" onclick="toggleAuthMode('register')">Kayıt Ol</button>
+                <div class="auth-nav">
+                    <button class="auth-btn active" id="tab-login-btn" onclick="showForm('login')">Giriş Yap</button>
+                    <button class="auth-btn" id="tab-reg-btn" onclick="showForm('register')">Kayıt Ol</button>
                 </div>
 
-                <div id="auth-form-login">
-                    <div class="input-group">
+                <div id="form-login">
+                    <div class="form-group">
                         <label>Kullanıcı Adı</label>
-                        <input type="text" id="loginUser" placeholder="Kullanıcı adınız">
+                        <input type="text" id="loginUser" placeholder="Adınızı yazın">
                     </div>
-                    <div class="input-group">
+                    <div class="form-group">
                         <label>Şifre</label>
                         <input type="password" id="loginPass" placeholder="••••••••">
                     </div>
                     <button class="btn" onclick="doLogin()">Giriş Yap ➔</button>
                 </div>
 
-                <div id="auth-form-register" style="display: none;">
-                    <div class="input-group">
+                <div id="form-register" style="display: none;">
+                    <div class="form-group">
                         <label>Yeni Kullanıcı Adı</label>
                         <input type="text" id="regUser" placeholder="Kullanıcı adı belirleyin">
                     </div>
-                    <div class="input-group">
+                    <div class="form-group">
                         <label>Şifre</label>
                         <input type="password" id="regPass" placeholder="••••••••">
                     </div>
-                    <button class="btn" onclick="doRegister()">Hesap Oluştur ✨</button>
+                    <button class="btn" onclick="doRegister()">Kayıt Ol ve Başla ✨</button>
                 </div>
             </div>
         </div>
@@ -105,263 +106,251 @@
         <!-- KARİYER OLUŞTURMA -->
         <div id="screen-create" class="screen">
             <div class="card">
-                <h2 style="font-size: 15px; margin-bottom: 10px; text-align: center;">🌟 Kariyerini Oluştur</h2>
-                <div class="input-group">
-                    <label>Oyuncu Adı Soyadı</label>
-                    <input type="text" id="createName" placeholder="Örn: Arda Güler">
+                <h2 style="font-size:16px; text-align:center; margin-bottom:12px;">⚽ Oyuncunu Oluştur</h2>
+                <div class="form-group">
+                    <label>Oyuncu Adı</label>
+                    <input type="text" id="pName" placeholder="Örn: Arda Güler">
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label>Mevki</label>
-                    <select id="createPos">
+                    <select id="pPos">
                         <option value="ST">Forvet (ST)</option>
                         <option value="CAM">Oyun Kurucu (CAM)</option>
                         <option value="CM">Orta Saha (CM)</option>
                         <option value="CB">Stoper (CB)</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <label>Başlangıç Kulübü (Takım Gücüne Göre Bonus Coin)</label>
-                    <select id="createTeam">
-                        <option value="Altınordu FK">Altınordu FK (OVR 64 - 🪙 5,000 Coin / 💎 50 Elmas)</option>
-                        <option value="Pendikspor">Pendikspor (OVR 70 - 🪙 8,500 Coin / 💎 75 Elmas)</option>
-                        <option value="Feyenoord">Feyenoord (OVR 78 - 🪙 15,000 Coin / 💎 120 Elmas)</option>
+                <div class="form-group">
+                    <label>Başlangıç Kulübü</label>
+                    <select id="pTeam">
+                        <option value="Altınordu FK">Altınordu FK (🪙 5.000 / 💎 50)</option>
+                        <option value="Pendikspor">Pendikspor (🪙 8.500 / 💎 75)</option>
+                        <option value="Feyenoord">Feyenoord (🪙 15.000 / 💎 120)</option>
                     </select>
                 </div>
-                <button class="btn" onclick="finishCareerCreate()">Kariyeri Başlat 🚀</button>
+                <button class="btn" onclick="createCareer()">Kariyeri Başlat 🚀</button>
             </div>
         </div>
 
-        <!-- MERKEZ / HUB -->
+        <!-- ANA MERKEZ -->
         <div id="screen-hub" class="screen">
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <h3 id="hubName" style="font-size: 15px;">-</h3>
-                    <p id="hubTeam" style="font-size: 11px; color: var(--text-muted);">-</p>
+                    <h3 id="hName" style="font-size:16px;">-</h3>
+                    <p id="hTeam" style="font-size:11px; color:var(--text-muted);">-</p>
                 </div>
-                <div style="text-align: right;">
-                    <span class="badge badge-green" id="hubLvl">Lvl 1</span>
-                    <h2 id="hubOvr" style="font-size: 18px; color: var(--primary); margin-top: 2px;">68</h2>
+                <div style="text-align:right;">
+                    <span class="badge" style="background:var(--primary); color:white;" id="hLvl">Lvl 1</span>
+                    <h2 id="hOvr" style="color:var(--primary); font-size:18px;">68</h2>
                 </div>
             </div>
 
             <div class="grid-2">
-                <div class="stat-box" style="border-color: var(--accent-coin);"><p>🪙 Coin (Altın)</p><h3 id="hubCoins" style="color:var(--accent-coin);">0</h3></div>
-                <div class="stat-box" style="border-color: var(--accent-gem);"><p>💎 Elmas (Nadir)</p><h3 id="hubGems" style="color:var(--accent-gem);">0</h3></div>
+                <div class="stat-box" style="border-color:var(--accent-coin);"><p>🪙 Coin</p><h3 id="hCoins" style="color:var(--accent-coin);">0</h3></div>
+                <div class="stat-box" style="border-color:var(--accent-gem);"><p>💎 Elmas</p><h3 id="hGems" style="color:var(--accent-gem);">0</h3></div>
             </div>
 
             <div class="grid-2">
-                <div class="stat-box"><p>Enerji</p><h3 id="hubEnergy">100</h3></div>
-                <div class="stat-box"><p>Moral</p><h3 id="hubMorale">95</h3></div>
+                <div class="stat-box"><p>Enerji</p><h3 id="hEnergy">100</h3></div>
+                <div class="stat-box"><p>Moral</p><h3 id="hMorale">95</h3></div>
             </div>
 
-            <button class="btn" onclick="startMatch()">⚽ MAÇA ÇIK (+Coin & XP)</button>
-            <button class="btn btn-secondary" onclick="doTrain()">💪 Antrenman Yap (+XP)</button>
+            <button class="btn" onclick="playMatch()">⚽ MAÇA ÇIK (+Coin & XP)</button>
+            <button class="btn btn-sec" onclick="train()">💪 Antrenman Yap (+XP)</button>
         </div>
 
         <!-- TRANSFER PAZARI -->
         <div id="screen-market" class="screen">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <h3 style="font-size:14px;">🛍️ Transfer Pazarı</h3>
-                <button class="btn btn-secondary" style="width:auto; padding:6px 10px; font-size:11px;" onclick="generateMarketPlayers()">🔄 Yenile</button>
+                <button class="btn btn-sec" style="width:auto; padding:6px 12px; font-size:11px;" onclick="loadMarket()">🔄 Yenile</button>
             </div>
-            <div id="marketPlayerList" style="display:flex; flex-direction:column; gap:8px;">
-                <!-- Transfer Oyuncuları -->
-            </div>
+            <div id="marketList" style="display:flex; flex-direction:column; gap:8px;"></div>
         </div>
 
-        <!-- MAÇ EKRANI -->
-        <div id="screen-match" class="screen">
-            <div class="card" style="text-align: center;">
-                <p id="matchVs" style="font-size: 11px; color: var(--text-muted);">Takım vs Rakip</p>
-                <h1 id="matchScore" style="font-size: 32px; color: var(--primary); margin: 6px 0;">0 - 0</h1>
-                <p id="matchTime" style="font-size: 11px; font-weight: 700;">0' Maç Başladı</p>
-            </div>
-            <div class="card" id="matchLogs" style="height: 160px; overflow-y: auto; font-size: 11px; font-family: monospace;">
-                <div>Taktikler belirleniyor...</div>
-            </div>
-            <button class="btn" id="matchNextBtn" onclick="nextMatchStep()">Atak Geliştir ➔</button>
-            <button class="btn btn-secondary" id="matchExitBtn" onclick="exitMatch()" style="display:none;">Merkeze Dön</button>
-        </div>
-
-        <!-- 7123 ÖZELLİK VE MEGA ÖZELLİKLER -->
+        <!-- ÖZELLİKLER -->
         <div id="screen-features" class="screen">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="font-size:13px;">⚡ 7.123 Özellik Kataloğu</h3>
-            </div>
-            <input type="text" id="searchFeature" placeholder="Özellik veya Mega Özellik ara..." oninput="renderFeatures()">
-            <div class="card" id="featureList" style="max-height: 440px; overflow-y: auto; display:flex; flex-direction:column; gap:6px; padding:8px;">
-                <!-- Dinamik Özellikler -->
-            </div>
+            <h3 style="font-size:14px;">⚡ 7.123 Özellik Kataloğu</h3>
+            <input type="text" id="fSearch" placeholder="Özellik veya Mega Özellik ara..." oninput="renderFeatures()">
+            <div class="card" id="fList" style="max-height:400px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
         </div>
 
         <!-- PROFİL -->
         <div id="screen-profile" class="screen">
             <div class="card">
-                <h3 style="font-size: 13px; margin-bottom: 8px;">👤 Oyuncu Detayları</h3>
+                <h3 style="font-size:14px; margin-bottom:8px;">👤 İstatistikler</h3>
                 <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
-                    <div style="display:flex; justify-content:space-between;"><span>Hız:</span><strong id="profSpeed">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Şut Gücü:</span><strong id="profShot">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Pas Yeteneği:</span><strong id="profPass">68</strong></div>
-                    <div style="display:flex; justify-content:space-between;"><span>Defans:</span><strong id="profDef">60</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Hız:</span><strong id="stSpd">68</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Şut:</span><strong id="stSht">68</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Pas:</span><strong id="stPas">68</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Defans:</span><strong id="stDef">60</strong></div>
                 </div>
             </div>
-            <button class="btn btn-danger" onclick="logout()">Çıkış Yap / Hesabı Sıfırla</button>
+            <button class="btn btn-danger" onclick="logout()">Hesabı Sıfırla / Çıkış</button>
         </div>
     </div>
 
-    <!-- ALT NAVİGASYON -->
-    <div class="navbar" id="bottomNav">
-        <button class="nav-item active" onclick="navTo('screen-hub', this)"><span>🏠 Merkez</span></button>
-        <button class="nav-item" onclick="navTo('screen-market', this)"><span>🛍️ Transfer</span></button>
-        <button class="nav-item" onclick="navTo('screen-features', this)"><span>⚡ Özellikler</span></button>
-        <button class="nav-item" onclick="navTo('screen-profile', this)"><span>👤 Profil</span></button>
+    <div class="navbar" id="mainNav">
+        <button class="nav-btn active" onclick="nav('screen-hub', this)">🏠 Merkez</button>
+        <button class="nav-btn" onclick="nav('screen-market', this)">🛍️ Transfer</button>
+        <button class="nav-btn" onclick="nav('screen-features', this)">⚡ Özellikler</button>
+        <button class="nav-btn" onclick="nav('screen-profile', this)">👤 Profil</button>
     </div>
 </div>
 
 <script>
-    let account = JSON.parse(localStorage.getItem('km_acc')) || null;
-    let career = JSON.parse(localStorage.getItem('km_career')) || null;
+    let user = JSON.parse(localStorage.getItem('km_usr')) || null;
+    let game = JSON.parse(localStorage.getItem('km_gam')) || null;
 
-    // 7.123 Toplam Özellik (6848 Standart + 275 Mega Özellik)
-    const categories = ["Teknik", "Fiziksel", "Mental", "Ekipman", "Yaşam Tarzı", "Mega Özellik"];
-    const baseNames = [
-        "Falsolu Trivela", "Ölü Yaprak Frikik", "Bacak Arası Çalım", "Akrobatik Volley", "Lazer Pas",
-        "Dokuz Metre Frikik", "Patlayıcı Güç Deparı", "Oksijen Kapasitesi Pro", "Kasırga Hızlanması", "Çelik Bilek",
-        "Galaktik Meteor Şut", "Kuantum Trivela", "Işık Hızı Frikik", "Hayalet Çalım", "Lazer Diyagonal Pas",
-        "Titanyum Omuz Omuza", "Elmas İşlemeli Krampon", "Milli Takım Efsanesi", "Mega Patronuluk", "Altın Top Koleksiyonu"
-    ];
-
-    const allFeatures = [];
+    // 7123 Özellik Oluşturma
+    const features = [];
+    const baseNames = ["Trivela", "Ölü Yaprak", "Lazer Pas", "Çelik Bilek", "Meteor Şut", "Kuantum Çalım", "Titanyum Pres"];
     for(let i=1; i<=7123; i++) {
-        let isMega = i > 6848;
-        let base = baseNames[(i - 1) % baseNames.length];
-        let tier = Math.ceil(i / baseNames.length);
-        allFeatures.push({
+        let isM = i > 6848;
+        let bName = baseNames[i % baseNames.length];
+        features.push({
             id: i,
-            name: isMega ? `🔥 MEGA-${i - 6848}: ${base}` : `${base} ${tier > 1 ? 'Seviye ' + tier : ''}`,
-            category: isMega ? "Mega Özellik" : categories[i % (categories.length - 1)],
-            costCoin: isMega ? (i - 6848) * 1000 : i * 100,
-            costGem: isMega ? Math.ceil((i - 6848) / 5) : Math.ceil(i / 150),
-            isMega: isMega,
-            unlocked: i <= 5
+            name: isM ? `🔥 MEGA-${i-6848}: ${bName}` : `${bName} Lvl ${Math.ceil(i/7)}`,
+            costC: isM ? (i-6848)*500 : i*80,
+            costG: isM ? Math.ceil((i-6848)/10) : Math.ceil(i/200),
+            isM: isM
         });
     }
 
-    function toggleAuthMode(mode) {
-        document.querySelectorAll('.auth-tab-btn').forEach(b => b.classList.remove('active'));
-        if(mode === 'login') {
-            document.querySelectorAll('.auth-tab-btn')[0].classList.add('active');
-            document.getElementById('auth-form-login').style.display = 'block';
-            document.getElementById('auth-form-register').style.display = 'none';
-        } else {
-            document.querySelectorAll('.auth-tab-btn')[1].classList.add('active');
-            document.getElementById('auth-form-login').style.display = 'none';
-            document.getElementById('auth-form-register').style.display = 'block';
-        }
-    }
-
-    function showScreen(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.getElementById('bottomNav').style.display = ['screen-auth', 'screen-create'].includes(id) ? 'none' : 'flex';
-    }
-
-    function navTo(id, btn) {
-        showScreen(id);
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        btn.classList.add('active');
-        if(id === 'screen-features') renderFeatures();
-        if(id === 'screen-market') generateMarketPlayers();
-        if(id === 'screen-profile') updateProfile();
+    function showForm(m) {
+        document.getElementById('tab-login-btn').classList.toggle('active', m==='login');
+        document.getElementById('tab-reg-btn').classList.toggle('active', m==='register');
+        document.getElementById('form-login').style.display = m==='login'?'block':'none';
+        document.getElementById('form-register').style.display = m==='register'?'block':'none';
     }
 
     function doRegister() {
-        const u = document.getElementById('regUser').value;
-        const p = document.getElementById('regPass').value;
-        if(!u || !p) return alert('Lütfen bilgileri doldurun!');
-        localStorage.setItem('km_acc', JSON.stringify({u, p}));
-        alert('Kayıt başarılı! Şimdi giriş yapabilirsiniz.');
-        toggleAuthMode('login');
+        const u = document.getElementById('regUser').value.trim();
+        const p = document.getElementById('regPass').value.trim();
+        if(!u || !p) return alert('Lütfen tüm alanları doldurun!');
+        localStorage.setItem('km_usr', JSON.stringify({u, p}));
+        alert('Kayıt başarılı! Giriş Yap sekmesinden giriş yapabilirsiniz.');
+        showForm('login');
     }
 
     function doLogin() {
-        const u = document.getElementById('loginUser').value;
-        const p = document.getElementById('loginPass').value;
-        account = JSON.parse(localStorage.getItem('km_acc'));
-        if(!account || account.u !== u || account.p !== p) {
-            return alert('Hatalı kullanıcı adı veya şifre! Önce Kayıt Olun.');
+        const u = document.getElementById('loginUser').value.trim();
+        const p = document.getElementById('loginPass').value.trim();
+        user = JSON.parse(localStorage.getItem('km_usr'));
+        if(!user || user.u !== u || user.p !== p) {
+            return alert('Hatalı kullanıcı adı veya şifre! (Önce Kayıt Olun)');
         }
-        if(!career) showScreen('screen-create');
-        else { loadHub(); showScreen('screen-hub'); }
+        if(!game) setScreen('screen-create');
+        else { loadHub(); setScreen('screen-hub'); }
     }
 
-    function finishCareerCreate() {
-        const name = document.getElementById('createName').value;
-        const pos = document.getElementById('createPos').value;
-        const team = document.getElementById('createTeam').value;
-        if(!name) return alert('İsim giriniz!');
+    function createCareer() {
+        const name = document.getElementById('pName').value.trim();
+        const pos = document.getElementById('pPos').value;
+        const team = document.getElementById('pTeam').value;
+        if(!name) return alert('Lütfen futbolcu adı yazın!');
 
-        let startCoins = 5000, startGems = 50;
-        if(team === 'Pendikspor') { startCoins = 8500; startGems = 75; }
-        if(team === 'Feyenoord') { startCoins = 15000; startGems = 120; }
+        let c = 5000, g = 50;
+        if(team === 'Pendikspor') { c = 8500; g = 75; }
+        if(team === 'Feyenoord') { c = 15000; g = 120; }
 
-        career = {
-            name, pos, team, level: 1, xp: 0,
-            coins: startCoins, gems: startGems,
-            energy: 100, morale: 95,
-            stats: { speed: 68, shot: 68, pass: 68, def: 60 }
-        };
-        localStorage.setItem('km_career', JSON.stringify(career));
-        alert(`Kariyer Başlatıldı! Takım gücü bonusuyla 🪙 ${startCoins} Coin ve 💎 ${startGems} Elmas kazandın!`);
+        game = { name, pos, team, lvl: 1, xp: 0, coins: c, gems: g, energy: 100, morale: 95, stats: { spd: 68, sht: 68, pas: 68, def: 60 } };
+        localStorage.setItem('km_gam', JSON.stringify(game));
         loadHub();
-        showScreen('screen-hub');
+        setScreen('screen-hub');
     }
 
     function loadHub() {
-        if(!career) return;
-        document.getElementById('hubName').innerText = career.name;
-        document.getElementById('hubTeam').innerText = `${career.team} (${career.pos})`;
-        document.getElementById('hubLvl').innerText = `Lvl ${career.level}`;
-        document.getElementById('hubCoins').innerText = career.coins.toLocaleString();
-        document.getElementById('hubGems').innerText = career.gems;
-        document.getElementById('hubEnergy').innerText = career.energy;
-        document.getElementById('hubMorale').innerText = career.morale;
-        
-        let ovr = Math.floor((career.stats.speed + career.stats.shot + career.stats.pass + career.stats.def)/4);
-        document.getElementById('hubOvr').innerText = ovr;
+        if(!game) return;
+        document.getElementById('hName').innerText = game.name;
+        document.getElementById('hTeam').innerText = `${game.team} (${game.pos})`;
+        document.getElementById('hLvl').innerText = `Lvl ${game.lvl}`;
+        document.getElementById('hCoins').innerText = game.coins.toLocaleString();
+        document.getElementById('hGems').innerText = game.gems;
+        document.getElementById('hEnergy').innerText = game.energy;
+        document.getElementById('hMorale').innerText = game.morale;
+        document.getElementById('hOvr').innerText = Math.floor((game.stats.spd + game.stats.sht + game.stats.pas + game.stats.def)/4);
     }
 
-    function generateMarketPlayers() {
-        const firstNames = ["Luka", "Mateo", "Enzo", "Gabriel", "Bruno", "Sandro", "Kylian"];
-        const lastNames = ["Silva", "Rossi", "Fernandes", "Gomez", "Santos", "Modric", "Benzema"];
-        const positions = ["ST", "CAM", "CM", "CB"];
-        
-        const container = document.getElementById('marketPlayerList');
-        container.innerHTML = '';
+    function setScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.getElementById('mainNav').style.display = ['screen-auth', 'screen-create'].includes(id) ? 'none' : 'flex';
+    }
 
-        for(let i=0; i<4; i++) {
-            let fn = firstNames[Math.floor(Math.random()*firstNames.length)];
-            let ln = lastNames[Math.floor(Math.random()*lastNames.length)];
-            let pos = positions[Math.floor(Math.random()*positions.length)];
-            let ovr = Math.floor(Math.random() * 15) + 65;
-            let price = ovr * 50;
+    function nav(id, btn) {
+        setScreen(id);
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if(id === 'screen-features') renderFeatures();
+        if(id === 'screen-market') loadMarket();
+        if(id === 'screen-profile') updateProfile();
+    }
 
-            container.innerHTML += `
+    function train() {
+        if(game.energy < 15) return alert('Enerjiniz yetersiz!');
+        game.energy -= 15; game.xp += 40; game.coins += 250; game.stats.spd += 1;
+        if(game.xp >= game.lvl * 100) { game.lvl++; game.gems += 15; alert(`Level Atladın! Lvl ${game.lvl} (+15 Elmas)`); }
+        localStorage.setItem('km_gam', JSON.stringify(game));
+        loadHub();
+    }
+
+    function playMatch() {
+        if(game.energy < 20) return alert('Enerjin yetersiz!');
+        let win = Math.random() > 0.4;
+        let cGain = win ? 1500 : 500;
+        game.coins += cGain;
+        game.energy -= 20;
+        alert(win ? `🎉 Maçı Kazandın! +🪙 ${cGain} Coin` : `Maç Bitti. +🪙 ${cGain} Coin`);
+        localStorage.setItem('km_gam', JSON.stringify(game));
+        loadHub();
+    }
+
+    function loadMarket() {
+        const names = ["Gabriel Rossi", "Bruno Silva", "Enzo Gomez", "Luka Modric"];
+        const list = document.getElementById('marketList');
+        list.innerHTML = '';
+        names.forEach(n => {
+            let prc = Math.floor(Math.random()*2000) + 3000;
+            list.innerHTML += `
                 <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <h4 style="font-size:13px;">${fn} ${ln}</h4>
-                        <p style="font-size:10px; color:var(--text-muted);">${pos} | Reyting: <strong style="color:var(--primary)">${ovr}</strong></p>
-                    </div>
-                    <button class="btn" style="width:auto; padding:6px 12px; font-size:11px;" onclick="buyPlayer('${fn} ${ln}', ${price})">🪙 ${price}</button>
-                </div>
-            `;
-        }
+                    <div><h4 style="font-size:12px;">${n}</h4><p style="font-size:10px; color:var(--text-muted);">Transfer Adayı</p></div>
+                    <button class="btn" style="width:auto; padding:6px 10px; font-size:11px;" onclick="buyP('${n}', ${prc})">🪙 ${prc}</button>
+                </div>`;
+        });
     }
 
-    function buyPlayer(name, price) {
-        if(career.coins < price) return alert('Yetersiz Coin!');
-        career.coins -= price;
-        career.morale = Math.min(100, career.morale + 5);
-        alert(`${name} transfer edildi! Takım morali arttı.`);
-        localStorage.setItem('km_career', JSON.stringify(career));
-        loadHub
+    function buyP(n, p) {
+        if(game.coins < p) return alert('Yetersiz Coin!');
+        game.coins -= p; game.morale = Math.min(100, game.morale + 5);
+        alert(`${n} transfer edildi!`);
+        localStorage.setItem('km_gam', JSON.stringify(game));
+        loadHub();
+    }
+
+    function renderFeatures() {
+        const q = document.getElementById('fSearch').value.toLowerCase();
+        const list = document.getElementById('fList');
+        list.innerHTML = '';
+        features.filter(f => f.name.toLowerCase().includes(q)).slice(0, 30).forEach(f => {
+            list.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#0b1120; padding:8px; border-radius:8px;">
+                    <span style="font-size:11px; color:${f.isM?'var(--mega)':'white'}">${f.name}</span>
+                    <span class="badge ${f.isM?'badge-mega':''}">🪙${f.costC} / 💎${f.costG}</span>
+                </div>`;
+        });
+    }
+
+    function updateProfile() {
+        if(!game) return;
+        document.getElementById('stSpd').innerText = game.stats.spd;
+        document.getElementById('stSht').innerText = game.stats.sht;
+        document.getElementById('stPas').innerText = game.stats.pas;
+        document.getElementById('stDef').innerText = game.stats.def;
+    }
+
+    function logout() { localStorage.clear(); location.reload(); }
+</script>
+</body>
+</html>
+
